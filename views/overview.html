@@ -8,8 +8,6 @@
     
     <style>
 
-        div.col-drone { border: 1px solid #eee; }
-
         div.col-drone td i { margin-top: 3px;}
         div.col-drone td span.description { display: none;}
         div.col-drone:hover td span.description { display: block;}
@@ -23,16 +21,16 @@
     <div class="hidden col-xs-12">
         <h1>Drone overview page</h1>
     </div>
-    {{#lstDrone}}
-    <div id="DN_drone_{{id}}" class="col-drone col-xs-3">
+
+    <div id="DN_drone_{{drone.id}}" class="col-drone col-xs-3">
         <h2>
             <i class="fa fa-plane"></i>
-            <span class="pull-right">Drone {{id}}</span>  
+            <span class="pull-right">Drone {{drone.id}}</span>
         </h2>
         <div class='row'>
             <table class="table">
                 <tbody>
-                    {{#show}}
+                    {{#drone.show}}
                     <tr>
                         <td class='show_{{name}} danger' title='{{title}}'>
                             <i class='fa pull-left fa-fw fa-{{icon}}'></i>
@@ -40,30 +38,30 @@
                             <span class='pull-right'></span>
                         </td>
                     </tr>
-                    {{/show}}
+                    {{/drone.show}}
                 </tbody>
             </table>
             <table class="table table-bordered text-center">
                 <tbody>
                     <tr>
-                        {{#state_0}}
+                        {{#drone.state_0}}
                         <td class='doToggle doToggle_{{id}}_{{name}} {{value}}' title='{{title}}'>
                             <i class='fa fa-fw fa-2x fa-{{icon}}'></i>
                         </td>
-                        {{/state_0}}
+                        {{/drone.state_0}}
                     </tr>
                     <tr>
-                        {{#state_1}}
+                        {{#drone.state_1}}
                         <td class='doToggle doToggle_{{id}}_{{name}} {{value}}' title='{{title}}'>
                             <i class='fa fa-fw fa-2x fa-{{icon}}'></i>
                         </td>
-                        {{/state_1}}
+                        {{/drone.state_1}}
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
-    {{/lstDrone}}
+
 
     <div class="col-xs-12">
         
@@ -110,34 +108,30 @@
                 dronePar.attr('value', param.val);
             });
             
-            data.drones.lstDrone.forEach(function(drone) {
-                var droneCol = $('#DN_drone_' + drone.id);
-                drone.show.forEach(function(item) {
-                    
-                    if(item.value === null) return;
+            drone = data.drone;
+            var droneCol = $('#DN_drone_' + drone.id);
+            drone.show.forEach(function(item) {
 
-                    var field = $(droneCol).find('td.show_' + item.name + ' span.pull-right');
-                    if(typeof item.value === 'object') {
-                        field.html('<span>' + item.value.join('</span><span>') + '</span>')
-                    }
-                    else {
-                        field.html(item.value)
-                    } 
-                })
+                if(item.value === null) return;
 
-                var setState = function(item) {
-                    $(droneCol).find('td.doToggle_' + drone.id + '_' + item.name)
-                        .removeClass('success')
-                        .removeClass('danger')
-                        .addClass(item.value);
-                        //console.log(drone.id + 'item name ' + item.name + ' has value ' + item.value)
+                var field = $(droneCol).find('td.show_' + item.name + ' span.pull-right');
+                if(typeof item.value === 'object') {
+                    field.html('<span>' + item.value.join('</span><span>') + '</span>')
                 }
-                drone.state_0.forEach(setState)
-                drone.state_1.forEach(setState)
+                else {
+                    field.html(item.value)
+                }
             })
 
-            // console.log('Display is being updated!');
-            // console.log(data)
+            var setState = function(item) {
+                $(droneCol).find('td.doToggle_' + drone.id + '_' + item.name)
+                    .removeClass('success')
+                    .removeClass('danger')
+                    .addClass(item.value);
+                    //console.log(drone.id + 'item name ' + item.name + ' has value ' + item.value)
+            }
+            drone.state_0.forEach(setState)
+            drone.state_1.forEach(setState)
         }
 
         // Basic socket communication

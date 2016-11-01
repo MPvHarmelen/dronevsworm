@@ -26,6 +26,11 @@ to move the drone, well, up and down. Clicking the car icon will let the
 program control the drone.
 
 
+To-Do
+=====
+[ ] don't hard code states in models/views.js:75-84
+[ ] look at `sent_last` in models/views.js:16
+
 Thoughts
 ========
 [ ] It seems like `return calc || stop;` in `models/control.js`is a bad idea.
