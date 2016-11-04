@@ -30,6 +30,8 @@ To-Do
 =====
 [ ] don't hard code states in models/views.js:75-84
 [ ] look at `sent_last` in models/views.js:16
+[ ] add recover button
+[ ] `|| true` ?! in flock.js:143
 
 Thoughts
 ========
