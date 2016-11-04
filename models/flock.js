@@ -21,7 +21,7 @@ var Drone = function(_id, base_ip) {
     safe: 1
   };
 
-  // console.log('Creating drone: ' + (_id === 999 ? '192.168.1.1' : (base_ip + _id)))
+  console.log('Creating drone: ' + (_id === 999 ? '192.168.1.1' : (base_ip + _id)))
 
   // The location object holds the information received from the camera's for each drone
   //  - T0 is the last point
